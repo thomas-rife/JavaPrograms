@@ -53,22 +53,24 @@ class Grades {
     }
 
     public int numOfFailingGrades(int gradeValue) { // returns the number of values in the array that are less than input value, gradeValue
-        String inputValue = System.console().readLine("Enter grade that you want to be the failing metric: ");
-        var gradee = Integer.parseInt(inputValue);
-        int[] failing = new int[this.values.length];
         for (var currentGrade = 0; currentGrade < this.values.length; currentGrade++) {
-            if (this.values[currentGrade] < gradee) {
-                failing[currentGrade] = newInteger;
+            if (this.values[currentGrade] < fail) {
+                failing[currentGrade] = gradeValue;
             }
         }
-        return failing;
+        return gradeValue;
     }
 
-    public void histogram() { // prints the histogram of grades
-        int[] histogram = new int[101];
-        for (var currentGrade = 0; currentGrade <this.values.length; currentGrade++) {
-            histogram[currentGrade]++;
-            for (int i = 0; i<=100; i++) {
+public void histogram() { // prints the histogram of grades
+    int[] gradercounter = new int[101];
+    for (int k = 0; k < this.values.length; k++) {
+        int score = this.values[k] - (this.values[k]%10);
+        gradercounter[score]++;
+    }
+    for (int i = 0; i < gradercounter.length; i++) {
+        if (gradercounter[i] > 0) {
+            System.out.print(i + "-" + (i/10) + "9: ");
+            for (int j = 0; j < gradercounter[i]; j++) {
                 System.out.print("*");
             }
             System.out.println();
@@ -78,9 +80,10 @@ class Grades {
 
 class GradesApp {
     public static void main(String[] args) {
-        // TODO Need to add error handling if user input is not a number, or negative.
         String response = System.console().readLine("Enter the number of grades to input: ");
         var numberOfGrades = Integer.parseInt(response);
+        //String inputValue = System.console().readLine("Enter grade that you want to be the failing metric: ");
+        //fail = Integer.parseInt(inputValue);
 
         // for (/* setup */; /* condition to keep going */ ; /* how to advance */) {
         var grades = new int[numberOfGrades];
@@ -88,14 +91,15 @@ class GradesApp {
             String gradeResponse = System.console().readLine("Enter grade " + (currentGrade + 1) + ": ");
             var gradeValue = Integer.parseInt(gradeResponse);
             grades[currentGrade] = gradeValue;
-        }   
+        }
 
-        // TODO The rest of the assignment 😅
         Grades grader = new Grades(grades);
         System.out.println("highest " +grader.highest());
         System.out.println("lowest " +grader.lowest());
         System.out.println("this is the number of total grades " +grader.numOfGrades());
         System.out.println("this is the average " +grader.average());
+        //System.out.println("This is the number of failing grades: " +grader.numofFailingGrades());
         grader.histogram();
     }
+}
 }
