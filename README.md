@@ -1,1 +1,1 @@
-# CMSI2120
+# Some fun classes in Java
